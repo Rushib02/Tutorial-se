@@ -1,0 +1,152 @@
+#include <iostream>
+
+class Deque {
+private:
+    static const int MAX_SIZE = 10;
+    int dequeArray[MAX_SIZE];
+    int front, rear;
+
+public:
+    Deque() : front(-1), rear(-1) {}
+
+    // Function to check if the deque is empty
+    bool isEmpty() {
+        return front == -1 && rear == -1;
+    }
+
+    // Function to check if the deque is full
+    bool isFull() {
+        return (rear + 1) % MAX_SIZE == front;
+    }
+
+    // Function to add element at the front of the deque
+    void addToFront(int element) {
+        if (isFull()) {
+            std::cout << "Deque is full. Cannot add element to the front.\n";
+            return;
+        }
+
+        if (isEmpty()) {
+            front = rear = 0;
+        } else {
+            front = (front - 1 + MAX_SIZE) % MAX_SIZE;
+        }
+
+        dequeArray[front] = element;
+        std::cout << "Element added to the front: " << element << std::endl;
+    }
+
+    // Function to add element at the rear of the deque
+    void addToRear(int element) {
+        if (isFull()) {
+            std::cout << "Deque is full. Cannot add element to the rear.\n";
+            return;
+        }
+
+        if (isEmpty()) {
+            front = rear = 0;
+        } else {
+            rear = (rear + 1) % MAX_SIZE;
+        }
+
+        dequeArray[rear] = element;
+        std::cout << "Element added to the rear: " << element << std::endl;
+    }
+
+    // Function to delete element from the front of the deque
+    void deleteFromFront() {
+        if (isEmpty()) {
+            std::cout << "Deque is empty. Cannot delete from the front.\n";
+            return;
+        }
+
+        if (front == rear) {
+            // Last element in the deque
+            front = rear = -1;
+        } else {
+            front = (front + 1) % MAX_SIZE;
+        }
+
+        std::cout << "Element deleted from the front.\n";
+    }
+
+    // Function to delete element from the rear of the deque
+    void deleteFromRear() {
+        if (isEmpty()) {
+            std::cout << "Deque is empty. Cannot delete from the rear.\n";
+            return;
+        }
+
+        if (front == rear) {
+            // Last element in the deque
+            front = rear = -1;
+        } else {
+            rear = (rear - 1 + MAX_SIZE) % MAX_SIZE;
+        }
+
+        std::cout << "Element deleted from the rear.\n";
+    }
+
+    // Function to display the elements in the deque
+    void displayDeque() {
+        if (isEmpty()) {
+            std::cout << "Deque is empty.\n";
+            return;
+        }
+
+        std::cout << "Elements in the deque: ";
+        int i = front;
+        do {
+            std::cout << dequeArray[i] << " ";
+            i = (i + 1) % MAX_SIZE;
+        } while (i != (rear + 1) % MAX_SIZE);
+
+        std::cout << std::endl;
+    }
+};
+
+int main() {
+    Deque deque;
+    int choice, element;
+
+    do {
+        std::cout << "\nDeque Simulation Menu:\n";
+        std::cout << "1. Add to Front\n";
+        std::cout << "2. Add to Rear\n";
+        std::cout << "3. Delete from Front\n";
+        std::cout << "4. Delete from Rear\n";
+        std::cout << "5. Display Deque\n";
+        std::cout << "6. Exit\n";
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1:
+                std::cout << "Enter the element to add to the front: ";
+                std::cin >> element;
+                deque.addToFront(element);
+                break;
+            case 2:
+                std::cout << "Enter the element to add to the rear: ";
+                std::cin >> element;
+                deque.addToRear(element);
+                break;
+            case 3:
+                deque.deleteFromFront();
+                break;
+            case 4:
+                deque.deleteFromRear();
+                break;
+            case 5:
+                deque.displayDeque();
+                break;
+            case 6:
+                std::cout << "Exiting program.\n";
+                break;
+            default:
+                std::cout << "Invalid choice. Try again.\n";
+        }
+    } while (choice != 6);
+
+    return 0;
+}

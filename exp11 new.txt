@@ -1,0 +1,77 @@
+#include <iostream>
+#include <queue>
+
+class JobQueue {
+private:
+    std::queue<std::string> jobs;
+
+public:
+    // Function to add a job to the queue
+    void addJob(const std::string& job) {
+        jobs.push(job);
+        std::cout << "Job added to the queue: " << job << std::endl;
+    }
+
+    // Function to delete a job from the queue
+    void deleteJob() {
+        if (!jobs.empty()) {
+            std::cout << "Job deleted from the queue: " << jobs.front() << std::endl;
+            jobs.pop();
+        } else {
+            std::cout << "Queue is empty. No job to delete." << std::endl;
+        }
+    }
+
+    // Function to display the current jobs in the queue
+    void displayJobs() {
+        if (!jobs.empty()) {
+            std::cout << "Current jobs in the queue:" << std::endl;
+            std::queue<std::string> tempQueue = jobs;
+            while (!tempQueue.empty()) {
+                std::cout << tempQueue.front() << std::endl;
+                tempQueue.pop();
+            }
+        } else {
+            std::cout << "Queue is empty. No jobs to display." << std::endl;
+        }
+    }
+};
+
+int main() {
+    JobQueue jobQueue;
+    int choice;
+
+    do {
+        std::cout << "\nJob Queue Simulation Menu:\n";
+        std::cout << "1. Add Job\n";
+        std::cout << "2. Delete Job\n";
+        std::cout << "3. Display Jobs\n";
+        std::cout << "4. Exit\n";
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1:
+                {
+                    std::string newJob;
+                    std::cout << "Enter the job name: ";
+                    std::cin >> newJob;
+                    jobQueue.addJob(newJob);
+                    break;
+                }
+            case 2:
+                jobQueue.deleteJob();
+                break;
+            case 3:
+                jobQueue.displayJobs();
+                break;
+            case 4:
+                std::cout << "Exiting program.\n";
+                break;
+            default:
+                std::cout << "Invalid choice. Try again.\n";
+        }
+    } while (choice != 4);
+
+    return 0;
+}
